@@ -1,6 +1,8 @@
 from flask import jsonify, request, current_app
 import jwt
 import datetime
+from db import Db
+import hashlib, hmac
 
 def jwt_token_required():
     token = request.args.get('token')
@@ -17,11 +19,18 @@ def verify_token(token):
     return decoded_token
 
 def login(username, password):
-    # TODO: use the database to verify the username and password
-    if username == 'admin' and password == 'admin':
+    db = Db.get_instance()
+    sql = "SELECT * FROM users WHERE password = %s AND username = %s"
+    
+    if username != "admin": # do not hash when logging in to admin, since its the only way to have a valid token and u could not hash password during initialization of that user
+        password = hashlib.md5(password.encode()).hexdigest() # hash the password
+        # hmac.new('key', 'msg').hexdigest() # use when above is inconsistent (di ko sure sa consistency sa private key) FROM:https://stackoverflow.com/questions/697134/how-to-set-the-crypto-key-for-pythons-md5-module
+    
+    user = db.fetchone(sql,(password, username))
+    if user:
         payload = {
-            'username': username,
-            'id': 100,
+            'username': user["username"],
+            'id': user["id"],
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
         }
         token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256')
