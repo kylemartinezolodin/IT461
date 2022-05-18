@@ -1,0 +1,60 @@
+@host = http://127.0.0.1:6000/v1/users
+
+
+### Get all cats
+GET {{host}}/?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjEwMCwiZXhwIjoxNjUyOTY2ODI3fQ.OTYJ4c--MdIndWiXyAw42aVJwGT7-c2sfgA2RVKQLWE HTTP/1.1
+
+
+### Create new cats
+POST {{host}}/?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjEwMCwiZXhwIjoxNjUyOTY2ODI3fQ.OTYJ4c--MdIndWiXyAw42aVJwGT7-c2sfgA2RVKQLWE HTTP/1.1
+Content-Type: application/json
+
+[
+  {
+    "id": 0,
+    "username": "mini",
+    "password": "awww"
+  },
+  {
+    "id": 0,
+    "username": "minie",
+    "password": "awwwzzz"
+}
+]
+
+
+### Update cats
+PUT {{host}}/?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjEwMCwiZXhwIjoxNjUyOTY2ODI3fQ.OTYJ4c--MdIndWiXyAw42aVJwGT7-c2sfgA2RVKQLWE HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 2,
+    "username": "mingming4",
+    "password": "awww"
+}
+
+
+### Delete cats
+DELETE {{host}}/?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjEwMCwiZXhwIjoxNjUyOTY2ODI3fQ.OTYJ4c--MdIndWiXyAw42aVJwGT7-c2sfgA2RVKQLWE HTTP/1.1
+Content-Type: application/json
+
+5
+
+
+
+### Get single user
+GET {{host}}/2?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjEwMCwiZXhwIjoxNjUyOTY2ODI3fQ.OTYJ4c--MdIndWiXyAw42aVJwGT7-c2sfgA2RVKQLWE HTTP/1.1
+
+
+### Update sing dog
+PUT {{host}}/2?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjEwMCwiZXhwIjoxNjUyOTY2ODI3fQ.OTYJ4c--MdIndWiXyAw42aVJwGT7-c2sfgA2RVKQLWE HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 0, 
+  "username": "Whitish"
+}
+
+
+### Delete single dog
+DELETE {{host}}/2?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjEwMCwiZXhwIjoxNjUyOTY2ODI3fQ.OTYJ4c--MdIndWiXyAw42aVJwGT7-c2sfgA2RVKQLWE HTTP/1.1

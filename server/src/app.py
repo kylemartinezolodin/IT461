@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, make_response, g
 from flask import Blueprint
 from v1.dog.router import DogRouter
 from v1.cat.router import CatRouter
+from v1.user.router import UserRouter
 from v1.auth import login as auth_login, verify_token as auth_verify_token
 from db import Db
 
@@ -10,6 +11,7 @@ app.config['SECRET_KEY'] = 'I/L0ve/CIT-U'
 
 app.register_blueprint(DogRouter.handler())
 app.register_blueprint(CatRouter.handler())
+app.register_blueprint(UserRouter.handler())
 
 @app.route('/v1/login', methods=['POST'])
 def login():
