@@ -62,6 +62,12 @@ function App() {
     console.log(response.data);
     getDogs(url);
   }
+  const dogDeleteHandler = async (id) => {
+    console.log('DOG: ', id);
+    const response = await axiosPrivate.delete('/dogs/', JSON.stringify(id));
+    console.log(response.data);
+    getDogs(url);
+  }
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -81,6 +87,7 @@ function App() {
           <Route path="dogs/create" element={<DogAdd addHandler={dogAddHandler} />} />
           <Route path="dogs/view/:id" element={<DogDetail />} />
           <Route path="dogs/edit/:id" element={<DogEdit updateHandler={dogUpdateHandler} />} />
+          <Route path="dogs/delete/:id" element={<DogDelete deleteHandler={dogDeleteHandler} />} />
         </Route>
 
 
