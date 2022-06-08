@@ -1,22 +1,22 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-const DogDelete = ({deleteHandler}) => {
+const CatDelete = ({deleteHandler}) => {
     const location = useLocation();
-    const dog = location.state.dog;
+    const cat = location.state.cat;
 
     const handleYes = async () => {
-        deleteHandler(dog.id)
-        navigate('/dogs');
+        deleteHandler(cat.id)
+        navigate('/cats');
     }
 
     const handleNo = () => {
-        navigate('/dogs');
+        navigate('/cats');
     }
 
     return (
 
         <section>
-            <h1>Delete {dog.name}?</h1>
+            <h1>Delete {cat.name}?</h1>
             <div>
               <button onClick={handleYes}>Yes</button>
               <button onClick={handleNo}>No</button>
@@ -26,4 +26,4 @@ const DogDelete = ({deleteHandler}) => {
     )
 }
 
-export default DogDelete
+export default CatDelete

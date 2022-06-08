@@ -40,16 +40,6 @@ function App() {
           navigate('/login', { state: { from: location }, replace: true });
       }
   }
-  useEffect(() => {
-      const controller = new AbortController();
-      getDogs(url, {
-          signal: controller.signal
-      });
-      return () => {
-          controller.abort();
-      }
-  }, []);
-
   const dogAddHandler = async ({name}) => {
     console.log('DOG: ', name);
     const response = await axiosPrivate.post('/dogs/', JSON.stringify({id: 0, name}));
@@ -68,6 +58,49 @@ function App() {
     console.log(response.data);
     getDogs(url);
   }
+
+  const getCats = async (url, options = null) => {
+    setUrl(url);
+    try {
+        const response = await axiosPrivate.get(url, options);
+        console.log(response.data);
+        setCats(response.data);
+    } catch (err) {
+        console.error(err);
+        navigate('/login', { state: { from: location }, replace: true });
+    }
+  }
+  const catAddHandler = async ({name}) => {
+    console.log('CAT: ', name);
+    const response = await axiosPrivate.post('/cats/', JSON.stringify({id: 0, name}));
+    console.log(response.data);
+    getCats(url);
+  }
+  const catUpdateHandler = async (cat) => {
+    console.log('CAT: ', cat);
+    const response = await axiosPrivate.put('/cats/', JSON.stringify(cat));
+    console.log(response.data);
+    getCats(url);
+  }
+  const catDeleteHandler = async (id) => {
+    console.log('CAT: ', id);
+    const response = await axiosPrivate.delete('/cats/', JSON.stringify(id));
+    console.log(response.data);
+    getCats(url);
+  }
+
+  useEffect(() => {
+      const controller = new AbortController();
+      getDogs(url, {
+        signal: controller.signal
+      });
+      getCats(url, {
+        signal: controller.signal
+      });
+      return () => {
+          controller.abort();
+      }
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -90,6 +123,13 @@ function App() {
           <Route path="dogs/delete/:id" element={<DogDelete deleteHandler={dogDeleteHandler} />} />
         </Route>
 
+        <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
+          <Route path="cats" element={<Cats cats={cats} getCats={getCats} />} />
+          <Route path="cats/create" element={<CatAdd addHandler={catAddHandler} />} />
+          <Route path="cats/view/:id" element={<CatDetail />} />
+          <Route path="cats/edit/:id" element={<CatEdit updateHandler={catUpdateHandler} />} />
+          <Route path="cats/delete/:id" element={<CatDelete deleteHandler={catDeleteHandler} />} />
+        </Route>
 
         <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
           <Route path="admin" element={<Admin />} />
